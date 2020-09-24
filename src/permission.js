@@ -10,9 +10,9 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
 
-router.beforeEach(async(to, from, next) => {   //路由导航守卫 也叫全局守卫
+router.beforeEach(async(to, from, next) => { // 路由导航守卫 也叫全局守卫
   // start progress bar
-  NProgress.start() //刷新时进度条
+  NProgress.start() // 刷新时进度条
 
   // set page title//是用来设置当前配件的标题的
   document.title = getPageTitle(to.meta.title)
@@ -20,27 +20,27 @@ router.beforeEach(async(to, from, next) => {   //路由导航守卫 也叫全局
   // determine whether the user has logged in
   const hasToken = getToken()
 
-  if (hasToken) {   //如果登陆了  
-    if (to.path === '/login') {     //如果当前路由==="/login"
+  if (hasToken) { // 如果登陆了
+    if (to.path === '/login') { // 如果当前路由==="/login"
       // if is logged in, redirect to the home page
-      next({ path: '/' })         //跳转到'/'页面, 但是呢，没有跳，这是因为路由进行了重定向
-      //滚动条结束
+      next({ path: '/' }) // 跳转到'/'页面, 但是呢，没有跳，这是因为路由进行了重定向
+      // 滚动条结束
       NProgress.done() // hack: https://github.com/PanJiaChen/vue-element-admin/pull/2939
     } else {
       // determine whether the user has obtained his permission roles through getInfo
-      //如果没有登录,判断是否拥有hasRoles这个角色  未登录时store.getters.roles为空 第一次登陆时是为空的
+      // 如果没有登录,判断是否拥有hasRoles这个角色  未登录时store.getters.roles为空 第一次登陆时是为空的
       const hasRoles = store.getters.roles && store.getters.roles.length > 0
-      if (hasRoles) {  //如果有
+      if (hasRoles) { // 如果有
         next()
-      } else {  //为空只能走else这一条
+      } else { // 为空只能走else这一条
         try {
           // get user info
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
-          //先去拿到用户角色roles()   store.dispatch('user/getInfo')是store里面的东西
+          // 先去拿到用户角色roles()   store.dispatch('user/getInfo')是store里面的东西
           const { roles } = await store.dispatch('user/getInfo')
 
           // generate accessible routes map based on roles
-          //拿到用户角色roles(),生成动态路由  调用permission/generateRoutes
+          // 拿到用户角色roles(),生成动态路由  调用permission/generateRoutes
           const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
 
           // dynamically add accessible routes

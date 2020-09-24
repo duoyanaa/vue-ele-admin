@@ -156,7 +156,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm)  //action里面的东西  模块
+          this.$store.dispatch('user/login', this.loginForm) // action里面的东西  模块
             .then(() => {
               this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
               this.loading = false

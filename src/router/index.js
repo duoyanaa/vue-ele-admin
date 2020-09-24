@@ -38,7 +38,7 @@ import nestedRouter from './modules/nested'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-/*公共路由 */
+/* 公共路由 */
 export const constantRoutes = [
   {
     path: '/redirect',
@@ -54,22 +54,22 @@ export const constantRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login/index'),
-    hidden: true   //隐藏路由
+    hidden: true // 隐藏路由
   },
   {
     path: '/auth-redirect',
     component: () => import('@/views/login/auth-redirect'),
-    hidden: true   //隐藏路由
+    hidden: true // 隐藏路由
   },
   {
     path: '/404',
     component: () => import('@/views/error-page/404'),
-    hidden: true    //隐藏路由
+    hidden: true // 隐藏路由
   },
   {
     path: '/401',
     component: () => import('@/views/error-page/401'),
-    hidden: true    //隐藏路由
+    hidden: true // 隐藏路由
   },
   {
     path: '/',
@@ -80,7 +80,7 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: '首页', icon: 'bug', affix: true }//此处title是页面显示内容,icon填写图标的class名
+        meta: { title: '首页', icon: 'bug', affix: true }// 此处title是页面显示内容,icon填写图标的class名
       }
     ]
   },
@@ -140,8 +140,8 @@ export const asyncRoutes = [
     meta: {
       title: '权限',
       icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav 
-      //只要是admin角色，内容都可以看到
+      roles: ['admin', 'editor'] // you can set roles in root nav
+      // 只要是admin角色，内容都可以看到
     },
     children: [
       {
@@ -151,7 +151,7 @@ export const asyncRoutes = [
         meta: {
           title: '1111',
           roles: ['admin'] // or you can only set roles in sub nav
-          //只有admin可以看到  editor看不到
+          // 只有admin可以看到  editor看不到
         }
       },
       {
@@ -170,7 +170,7 @@ export const asyncRoutes = [
         meta: {
           title: '3333',
           roles: ['admin']
-          //只有admin可以看到  editor看不到
+          // 只有admin可以看到  editor看不到
         }
       }
     ]
@@ -195,8 +195,7 @@ export const asyncRoutes = [
   // nestedRouter,
   // tableRouter,
 
-
-  //商品管理
+  // 商品管理
   {
     path: '/product',
     component: Layout,
@@ -229,8 +228,8 @@ export const asyncRoutes = [
     ]
   },
 
-//城市模块
-{
+  // 城市模块
+  {
     path: '/city',
     component: Layout,
     redirect: '/city/list',
@@ -244,25 +243,104 @@ export const asyncRoutes = [
         path: 'create',
         component: () => import('@/views/city/create'),
         name: 'CreateCity',
-        //noCache: true  不缓存数据
-        meta: { title: '添加城市', noCache: true,icon: 'edit' }
+        // noCache: true  不缓存数据
+        meta: { title: '添加城市', icon: 'edit' }
       },
       {
-        path: 'edit/:id',  // path: 'edit/:id(\\d+)',   //去掉(\\d+)的正则验证
+        path: 'edit/:id', // path: 'edit/:id(\\d+)',   //去掉(\\d+)的正则验证
         component: () => import('@/views/city/edit'),
         name: 'EditCity',
-        meta: { title: '修改城市', noCache: true, activeMenu: '/city/list' },  
+        meta: { title: '修改城市', noCache: true, activeMenu: '/city/list' },
         hidden: true
       },
       {
         path: 'list',
         component: () => import('@/views/city/list'),
         name: 'CityList',
-        meta: { title: '城市列表',noCache: true, icon: 'list' }
+        meta: { title: '城市列表', icon: 'list' }
+      }
+    ]
+  },
+  // 电影模块
+  {
+    path: '/movie',
+    component: Layout,
+    redirect: '/movie/list',
+    name: 'Movie',
+    meta: {
+      title: '电影模块',
+      icon: 'el-icon-s-help'
+    },
+    children: [
+      {
+        path: 'create',
+        component: () => import('@/views/movie/create'),
+        name: 'CreateMovie',
+        // noCache: true  不缓存数据
+        meta: { title: '添加电影', noCache: true, icon: 'edit' }
+      },
+      {
+        path: 'edit/:id', // path: 'edit/:id(\\d+)',   //去掉(\\d+)的正则验证
+        component: () => import('@/views/movie/edit'),
+        name: 'EditMovie',
+        meta: { title: '修改电影', noCache: true, activeMenu: '/Movie/list' },
+        hidden: true
+      },
+      {
+        path: 'list',
+        component: () => import('@/views/movie/list'),
+        name: 'MovieList',
+        meta: { title: '电影列表', noCache: true, icon: 'list' }
       }
     ]
   },
 
+  // 带权限的财务管理
+
+  {
+    path: '/money',
+    component: Layout,
+    redirect: '/money/page',
+    alwaysShow: true, // will always show the root menu
+    name: 'Money',
+    meta: {
+      title: '财务管理',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+      // 只要是admin角色，内容都可以看到
+    },
+    children: [
+      {
+        path: 'page',
+        component: () => import('@/views/money/page'),
+        name: 'PageMoney',
+        meta: {
+          title: '城市模块',
+          roles: ['admin'] // or you can only set roles in sub nav
+          // 只有admin可以看到  editor看不到
+        }
+      },
+      {
+        path: 'directive',
+        component: () => import('@/views/money/directive'),
+        name: 'DirectiveMoney',
+        meta: {
+          title: '电影模块'
+          // if do not set roles, means: this page does not require money
+        }
+      },
+      {
+        path: 'role',
+        component: () => import('@/views/money/role'),
+        name: 'RoleMoney',
+        meta: {
+          title: '整体财务',
+          roles: ['admin']
+          // 只有admin可以看到  editor看不到
+        }
+      }
+    ]
+  },
 
   // {
   //   path: '/eaxmple',

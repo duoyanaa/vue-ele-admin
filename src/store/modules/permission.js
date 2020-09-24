@@ -50,11 +50,11 @@ const actions = {
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
       let accessedRoutes
-      if (roles.includes('admin')) {   //判断是否拥有admin这个权限
-        //如果有，让路由=asyncRoutes，asyncRoutes是路由表引过来的，他是一个异步路由，拿到所有异步路由
-        accessedRoutes = asyncRoutes || []  
+      if (roles.includes('admin')) { // 判断是否拥有admin这个权限
+        // 如果有，让路由=asyncRoutes，asyncRoutes是路由表引过来的，他是一个异步路由，拿到所有异步路由
+        accessedRoutes = asyncRoutes || []
       } else {
-        //否则拿到对应角色的路由
+        // 否则拿到对应角色的路由
         accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
       }
       commit('SET_ROUTES', accessedRoutes)

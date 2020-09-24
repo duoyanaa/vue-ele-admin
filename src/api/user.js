@@ -8,9 +8,9 @@ export function login(data) {
   })
 }
 
-//getInfo调用'/user/info'这个接口 拿到用户角色
+// getInfo调用'/user/info'这个接口 拿到用户角色
 export function getInfo(token) {
-  return request({   
+  return request({
     url: '/user/info',
     method: 'get',
     params: { token }

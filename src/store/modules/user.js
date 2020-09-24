@@ -30,10 +30,10 @@ const mutations = {
 
 const actions = {
   // user login
-  login({ commit }, userInfo) {   //userInfo对应的实参时拿到的username password
-    const { username, password } = userInfo  //对象结构赋值，拿到实参
-    return new Promise((resolve, reject) => {//拿到实参后 触发一个Promise对象 
-      login({ username: username.trim(), password: password }).then(response => { //此login不是递归
+  login({ commit }, userInfo) { // userInfo对应的实参时拿到的username password
+    const { username, password } = userInfo // 对象结构赋值，拿到实参
+    return new Promise((resolve, reject) => { // 拿到实参后 触发一个Promise对象
+      login({ username: username.trim(), password: password }).then(response => { // 此login不是递归
         const { data } = response
         commit('SET_TOKEN', data.token)
         setToken(data.token)
